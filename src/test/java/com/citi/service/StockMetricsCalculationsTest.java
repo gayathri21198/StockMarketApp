@@ -21,11 +21,23 @@ public class StockMetricsCalculationsTest {
     @BeforeEach
     public void setUp() {
         stockMarket = new StockMarket();
-        stockMarket.addStocks(new Stock("TEA", StockType.ORDINARY_SHARE, BigDecimal.valueOf(0), BigDecimal.valueOf(0), BigDecimal.valueOf(100), BigDecimal.valueOf(93.56)));
-        stockMarket.addStocks(new Stock("COF", StockType.PREFERRED_SHARE, BigDecimal.valueOf(8), BigDecimal.valueOf(0.04), BigDecimal.valueOf(100), BigDecimal.valueOf(106.34)));
-        stockMarket.addStocks(new Stock("MIL", StockType.ORDINARY_SHARE, BigDecimal.valueOf(8), BigDecimal.valueOf(0), BigDecimal.valueOf(100), BigDecimal.valueOf(104.65)));
-        stockMarket.addStocks(new Stock("JUI", StockType.ORDINARY_SHARE, BigDecimal.valueOf(23), BigDecimal.valueOf(0), BigDecimal.valueOf(70), BigDecimal.valueOf(73.23)));
-        stockMarket.addStocks(new Stock("WAT", StockType.ORDINARY_SHARE, BigDecimal.valueOf(13), BigDecimal.valueOf(0), BigDecimal.valueOf(250), BigDecimal.valueOf(253.75)));
+        Stock stockData1 = new Stock("TEA", StockType.ORDINARY_SHARE, BigDecimal.valueOf(0), BigDecimal.valueOf(0), BigDecimal.valueOf(150));
+        Stock stockData2 = new Stock("COF", StockType.PREFERRED_SHARE, BigDecimal.valueOf(8), BigDecimal.valueOf(0.04), BigDecimal.valueOf(100));
+        Stock stockData3 = new Stock("MIL", StockType.ORDINARY_SHARE, BigDecimal.valueOf(8), BigDecimal.valueOf(0), BigDecimal.valueOf(100));
+        Stock stockData4 = new Stock("JUI", StockType.ORDINARY_SHARE, BigDecimal.valueOf(23), BigDecimal.valueOf(0), BigDecimal.valueOf(70));
+        Stock stockData5 = new Stock("WAT", StockType.ORDINARY_SHARE, BigDecimal.valueOf(13), BigDecimal.valueOf(0), BigDecimal.valueOf(250));
+        stockMarket.addStocks(stockData1);
+        stockMarket.addStocks(stockData2);
+        stockMarket.addStocks(stockData3);
+        stockMarket.addStocks(stockData4);
+        stockMarket.addStocks(stockData5);
+        // Set stock price for each stock
+        stockMarket.getStocks().get("TEA").setStockPrice(BigDecimal.valueOf(93.56));
+        stockMarket.getStocks().get("COF").setStockPrice(BigDecimal.valueOf(106.34));
+        stockMarket.getStocks().get("MIL").setStockPrice(BigDecimal.valueOf(104.65));
+        stockMarket.getStocks().get("JUI").setStockPrice(BigDecimal.valueOf(73.23));
+        stockMarket.getStocks().get("WAT").setStockPrice(BigDecimal.valueOf(253.75));
+
 
         //Record Trades for each Stock Symbol
         stockMarket.addTrade("TEA", LocalDateTime.parse("2024-06-09T16:34:31.191533500"), BigInteger.valueOf(10), BigDecimal.valueOf(100), TradeAction.BUY);
