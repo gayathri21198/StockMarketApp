@@ -11,6 +11,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Main application class for the stock market project
+ */
+
 public class StockMarketApplication {
     public static void main(String[] args) {
         //Create the sample stock market data
@@ -26,10 +30,10 @@ public class StockMarketApplication {
         stockMarket.addStocks(stockData4);
         stockMarket.addStocks(stockData5);
 
-        /*
-         * The trades are captured for each symbol
-         */
+       // The trades are captured for each symbol and added to the trades map against the symbol key
         stockMarket.captureTrades(stockMarket, 15);
+
+        // Stock prices are generated for each symbol and added to the stocks map against the symbol key
         stockMarket.captureStockPrice(stockMarket);
 
         System.out.println("The stockMarket - \n" + Arrays.asList(stockMarket.getStocks()) + "\n");
