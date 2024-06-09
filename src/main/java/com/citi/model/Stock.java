@@ -21,6 +21,15 @@ public class Stock {
         this.parValue = parValue;
     }
 
+    public Stock(String stockIdentifier, StockType type, BigDecimal lastDividend, BigDecimal fixedDividend, BigDecimal parValue, BigDecimal basePrice) {
+        this.stockIdentifier = stockIdentifier;
+        this.type = type;
+        this.lastDividend = lastDividend;
+        this.fixedDividend = fixedDividend;
+        this.parValue = parValue;
+        this.stockPrice = basePrice;
+    }
+
     public String getStockIdentifier() {
         return stockIdentifier;
     }
@@ -41,7 +50,7 @@ public class Stock {
         return parValue;
     }
 
-    public BigDecimal getStockPrice(){
+    public BigDecimal getStockPrice() {
         return stockPrice;
     }
 

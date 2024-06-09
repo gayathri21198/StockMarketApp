@@ -14,8 +14,7 @@ public class Trade {
     private TradeAction tradeAction;
 
 
-    public Trade(LocalDateTime timeStamp, BigInteger tradeQuantity, BigDecimal tradedPrice, TradeAction tradeAction)
-    {
+    public Trade(LocalDateTime timeStamp, BigInteger tradeQuantity, BigDecimal tradedPrice, TradeAction tradeAction) {
         this.timeStamp = timeStamp;
         this.tradeQuantity = tradeQuantity;
         this.tradedPrice = tradedPrice;

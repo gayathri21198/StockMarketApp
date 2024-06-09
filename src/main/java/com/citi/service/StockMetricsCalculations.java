@@ -9,11 +9,21 @@ import java.math.BigInteger;
 import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
+/**
+ * The class contains the stock metrics calculations like
+ * 1. Dividend Yield
+ * 2. P/E Ratio - the Earnings Per Share is substituted with Last Dividend
+ * per the problem statement from the generic P/E formula
+ * 3. Volume Weighted Stock Price for past 15 minutes trades
+ * 4. All Share Index
+ */
 public class StockMetricsCalculations {
 
     /**
      * Method to calculate dividend yield for stock
+     *
      * @param stockData
      * @return dividendYield
      */
@@ -29,6 +39,7 @@ public class StockMetricsCalculations {
 
     /**
      * Method to calculate P/E ratio for stock
+     *
      * @param stockData
      * @return P/E ratio
      */
@@ -41,16 +52,19 @@ public class StockMetricsCalculations {
 
     /**
      * Method to calculate volume weighted stock price based on trades in past 15 minutes
+     *
      * @param stockSymbol
-     * @param stockMarket
+     * @param trades
+     * @param time           (Any given/present time)
+     * @param windowInterval (in minutes. 15 minutes per the problem statement)
      * @return volumeWeightedStockPrice
      */
 
-    public BigDecimal calculateVolumeWeightedStockPrice(String stockSymbol, StockMarket stockMarket) {
-        LocalDateTime pastFifteenMinutes = LocalDateTime.now().minusMinutes(15);
+    public BigDecimal calculateVolumeWeightedStockPrice(String stockSymbol, Map<String, List<Trade>> trades, LocalDateTime time, int windowInterval) {
+        LocalDateTime pastFifteenMinutes = time.minusMinutes(windowInterval);
         BigDecimal totalTradePriceQuantity = BigDecimal.ZERO;
         BigInteger totalQuantity = BigInteger.ZERO;
-        for (Trade trade : stockMarket.getTrades().get(stockSymbol)) {
+        for (Trade trade : trades.get(stockSymbol)) {
             if (trade.getTimeStamp().isAfter(pastFifteenMinutes)) {
                 totalTradePriceQuantity = totalTradePriceQuantity.add(trade.getTradedPrice().multiply(new BigDecimal(trade.getTradeQuantity())));
                 totalQuantity = totalQuantity.add(trade.getTradeQuantity());
@@ -61,6 +75,7 @@ public class StockMetricsCalculations {
 
     /**
      * Method to calculate allShareIndex of the stockMarket
+     *
      * @param stockMarket
      * @return allShareIndex
      */
@@ -75,6 +90,6 @@ public class StockMetricsCalculations {
                 stockCount = stockCount.add(BigInteger.ONE);
             }
         }
-        return stockCount == BigInteger.ZERO ? BigDecimal.ZERO : new BigDecimal(Math.pow(productOfPrices.doubleValue(), 1.0 / stockCount.doubleValue()));
+        return stockCount == BigInteger.ZERO ? BigDecimal.ZERO : new BigDecimal(Math.pow(productOfPrices.doubleValue(), 1.0 / stockCount.doubleValue())).setScale(2, RoundingMode.HALF_UP);
     }
 }
